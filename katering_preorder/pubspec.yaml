@@ -1,0 +1,30 @@
+name: katering_preorder
+description: "A new Flutter project."
+
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dio: ^5.7.0
+  shared_preferences: ^2.3.2
+  intl: any
+  flutter_localizations:
+    sdk: flutter
+  flutter_map: ^6.1.0
+  latlong2: ^0.9.0
+  firebase_core:
+  firebase_database:
+  fl_chart: ^0.66.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
