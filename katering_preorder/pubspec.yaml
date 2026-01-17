@@ -16,9 +16,10 @@ dependencies:
     sdk: flutter
   flutter_map: ^6.1.0
   latlong2: ^0.9.0
-  firebase_core:
+  firebase_core: ^4.3.0
   firebase_database:
   fl_chart: ^0.66.0
+  cloud_firestore: ^6.1.1
 
 dev_dependencies:
   flutter_test:

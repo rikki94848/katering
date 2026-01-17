@@ -5,8 +5,7 @@ import '../common/about_screen.dart';
 import 'packages_screen.dart';
 import 'my_orders_screen.dart';
 import 'public_menu_screen.dart';
-import '../extra/map_screen.dart';
-import '../extra/chart_screen.dart';
+import '../extra/firebase_monitor_screen.dart';
 
 class ClientHome extends StatefulWidget {
   final Session session;
@@ -97,6 +96,22 @@ class _ClientHomeState extends State<ClientHome> {
 
     return Scaffold(
       extendBody: true,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              // Kirim nama user yg login ke halaman chat
+              builder: (_) => ChatScreen(userName: widget.session.name),
+            ),
+          );
+        },
+        backgroundColor: const Color(0xFF7C3AED), // Ungu (sesuai tema)
+        foregroundColor: Colors.white, // Ikon warna putih
+        elevation: 4, // Efek bayangan
+        tooltip: 'Live Chat',
+        child: const Icon(Icons.chat_bubble_outline_rounded),
+      ),
       body: Stack(
         children: [
           // Background gradient (halus)

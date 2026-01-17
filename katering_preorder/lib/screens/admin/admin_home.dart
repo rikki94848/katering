@@ -571,7 +571,7 @@ class _AdminDrawer extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const FirebaseMonitorScreen(),
+                  builder: (_) => const ChatScreen(userName: 'Admin'),
                 ),
               ),
             ),

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "910772739003",
+    "project_id": "katering-preorder",
+    "storage_bucket": "katering-preorder.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910772739003:android:6dfd10bb11f933efa4429e",
+        "android_client_info": {
+          "package_name": "com.example.katering_preorder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-9tSSCIDKTJlIftHSaI_3KzwOm9yFFcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

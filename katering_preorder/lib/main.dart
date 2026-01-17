@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -11,7 +12,7 @@ Future<void> main() async {
 
   // Fix Intl locale error (DateFormat / NumberFormat)
   await initializeDateFormatting('id_ID', null);
-
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

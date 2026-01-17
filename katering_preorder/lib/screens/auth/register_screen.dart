@@ -216,8 +216,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             validator: (v) {
                               final s = (v ?? '').trim();
                               if (s.isEmpty) return 'Nama wajib diisi';
-                              if (s.length < 3)
+                              if (s.length < 3) {
                                 return 'Nama minimal 3 karakter';
+                              }
                               return null;
                             },
                           ),
@@ -268,8 +269,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             validator: (v) {
                               final s = (v ?? '');
                               if (s.isEmpty) return 'Password wajib diisi';
-                              if (s.length < 6)
+                              if (s.length < 6) {
                                 return 'Password minimal 6 karakter';
+                              }
                               return null;
                             },
                           ),
