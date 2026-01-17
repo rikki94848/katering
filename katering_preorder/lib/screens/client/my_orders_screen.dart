@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import '../../models/order.dart';
 import '../../services/order_service.dart';
 import '../../state/session.dart';
+import '../extra/firebase_monitor_screen.dart';
 
 class MyOrdersScreen extends StatefulWidget {
   final Session session;
@@ -35,9 +36,112 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
     });
   }
 
+  Future<void> _confirmReceived(int id) async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Pesanan Diterima?'),
+        content: const Text(
+          'Pastikan katering sudah sampai.\nPesanan akan dipindah ke Riwayat.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Batal'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Ya, Diterima'),
+          ),
+        ],
+      ),
+    );
+
+    if (ok != true) return;
+
+    try {
+      await _svc.setOrderStatus(widget.session.token, id, 'done');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Terima kasih! Pesanan selesai.')),
+      );
+      _reload();
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+    }
+  }
+
+  Future<void> _showRatingDialog(int id) async {
+    int rating = 5;
+    final noteCtrl = TextEditingController();
+
+    await showDialog(
+      context: context,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text('Beri Ulasan'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Bagaimana rasa makanannya?'),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(5, (index) {
+                      return IconButton(
+                        onPressed: () => setState(() => rating = index + 1),
+                        icon: Icon(
+                          index < rating
+                              ? Icons.star_rounded
+                              : Icons.star_border_rounded,
+                          color: Colors.amber,
+                          size: 32,
+                        ),
+                      );
+                    }),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: noteCtrl,
+                    decoration: const InputDecoration(
+                      labelText: 'Tulis masukan Anda...',
+                      border: OutlineInputBorder(),
+                    ),
+                    maxLines: 2,
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: const Text('Batal'),
+                ),
+                FilledButton(
+                  onPressed: () async {
+                    // Simulasi kirim review
+                    Navigator.pop(ctx);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Ulasan terkirim!')),
+                    );
+                    _reload();
+                  },
+                  child: const Text('Kirim'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
   DateTime? _parseDate(String s) {
     try {
-      // backend format: yyyy-MM-dd
       return DateTime.parse(s);
     } catch (_) {
       return null;
@@ -48,12 +152,12 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
     final a = _parseDate(start);
     final b = _parseDate(end);
     if (a == null || b == null) return '$start s/d $end';
-    return '${_prettyDate.format(a)}  —  ${_prettyDate.format(b)}';
+    return '${_prettyDate.format(a)} — ${_prettyDate.format(b)}';
   }
 
-  // Status color mapping
   ({Color bg, Color fg, IconData icon, String label}) _statusStyle(String raw) {
     final s = raw.toLowerCase().trim();
+    // Gunakan if { return ... } dengan kurung kurawal
     if (s == 'done') {
       return (
         bg: const Color(0xFFDCFCE7),
@@ -102,468 +206,264 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
     );
   }
 
-  void _showDetail(Order o) {
-    final st = _statusStyle(o.status);
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Pesanan Saya",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TabBar(
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    dividerColor: Colors.transparent,
+                    indicator: BoxDecoration(
+                      color: const Color(0xFF7C3AED),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF7C3AED).withValues(alpha: 0.3),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.grey.shade600,
+                    labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+                    tabs: const [
+                      Tab(text: 'Berjalan'),
+                      Tab(text: 'Riwayat'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: FutureBuilder<List<Order>>(
+              future: _future,
+              builder: (context, snap) {
+                if (snap.connectionState != ConnectionState.done) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (snap.hasError) {
+                  return Center(child: Text('Gagal: ${snap.error}'));
+                }
 
-    showModalBottomSheet(
-      context: context,
-      showDragHandle: true,
-      backgroundColor: Colors.transparent,
-      builder: (_) {
-        return _GlassCard(
-          padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Order #${o.id}',
+                final all = snap.data ?? [];
+                final active = all
+                    .where((x) => x.status != 'done' && x.status != 'rejected')
+                    .toList();
+                final history = all
+                    .where((x) => x.status == 'done' || x.status == 'rejected')
+                    .toList();
+
+                return TabBarView(
+                  children: [
+                    // NAMA FUNGSI SUDAH DIPERBAIKI (huruf kecil)
+                    _buildOrderList(
+                      items: active,
+                      isHistory: false,
+                      onAction: _confirmReceived,
+                    ),
+                    _buildOrderList(
+                      items: history,
+                      isHistory: true,
+                      onAction: _showRatingDialog,
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // NAMA FUNGSI DIGANTI DARI _OrderList JADI _buildOrderList
+  Widget _buildOrderList({
+    required List<Order> items,
+    required bool isHistory,
+    required Function(int) onAction,
+  }) {
+    if (items.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              isHistory ? Icons.history : Icons.soup_kitchen,
+              size: 50,
+              color: Colors.grey.shade300,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              isHistory ? 'Belum ada riwayat' : 'Tidak ada pesanan aktif',
+              style: TextStyle(color: Colors.grey.shade500),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return RefreshIndicator(
+      onRefresh: _reload,
+      child: ListView.separated(
+        padding: const EdgeInsets.all(16),
+        itemCount: items.length,
+        separatorBuilder: (_, __) => const SizedBox(height: 12),
+        itemBuilder: (context, i) {
+          final o = items[i];
+          final st = _statusStyle(o.status);
+
+          return Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: Colors.grey.shade200),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.03),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '#${o.id}',
                       style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
                       ),
                     ),
+                    IconButton(
+                      constraints:
+                          const BoxConstraints(), // Biar icon tidak makan tempat
+                      padding: const EdgeInsets.only(left: 8),
+                      icon: const Icon(Icons.chat_bubble_rounded,
+                          size: 18, color: Color(0xFF7C3AED)),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ChatScreen(
+                              // Ganti dengan nama user asli dari session jika ada
+                              // contoh: widget.session.userName
+                              userName: 'Client',
+                              orderId: o.id,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: st.bg,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(st.icon, size: 12, color: st.fg),
+                          const SizedBox(width: 4),
+                          Text(
+                            st.label,
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              color: st.fg,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  o.packageName,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 16,
                   ),
-                  _StatusPill(
-                    bg: st.bg,
-                    fg: st.fg,
-                    icon: st.icon,
-                    text: st.label,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  _fmtDateRange(o.startDate, o.endDate),
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.payments_outlined,
+                      size: 16,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      _money.format(o.total),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                if ((!isHistory && o.status == 'delivering') ||
+                    (isHistory && o.status == 'done')) ...[
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 40,
+                    child: isHistory
+                        ? OutlinedButton.icon(
+                            onPressed: () => onAction(o.id),
+                            icon: const Icon(Icons.star_outline, size: 18),
+                            label: const Text("Beri Ulasan"),
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(color: Color(0xFF7C3AED)),
+                              foregroundColor: const Color(0xFF7C3AED),
+                            ),
+                          )
+                        : FilledButton.icon(
+                            onPressed: () => onAction(o.id),
+                            icon: const Icon(Icons.check, size: 18),
+                            label: const Text("Pesanan Diterima"),
+                            style: FilledButton.styleFrom(
+                              backgroundColor: const Color(0xFF166534),
+                            ),
+                          ),
                   ),
                 ],
-              ),
-              const SizedBox(height: 10),
-
-              _InfoRow(left: 'Paket', right: o.packageName),
-              const SizedBox(height: 6),
-              _InfoRow(
-                left: 'Periode',
-                right: _fmtDateRange(o.startDate, o.endDate),
-              ),
-              const SizedBox(height: 6),
-              _InfoRow(left: 'Porsi / hari', right: '${o.portions}'),
-              const SizedBox(height: 6),
-              _InfoRow(
-                left: 'Total',
-                right: _money.format(o.total),
-                bold: true,
-              ),
-
-              const SizedBox(height: 12),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.close),
-                  label: const Text('Tutup'),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // Background gradient
-        Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [Color(0xFF7C3AED), Color(0xFF06B6D4), Color(0xFF22C55E)],
-              stops: [0.0, 0.55, 1.0],
+              ],
             ),
-          ),
-        ),
-        // White overlay (readability)
-        Container(color: Colors.white.withValues(alpha: .88)),
-
-        FutureBuilder<List<Order>>(
-          future: _future,
-          builder: (context, snap) {
-            if (snap.connectionState != ConnectionState.done) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (snap.hasError) {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: _GlassCard(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.error_outline, size: 28),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Gagal memuat pesanan:\n${snap.error}',
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 12),
-                        FilledButton.icon(
-                          onPressed: _reload,
-                          icon: const Icon(Icons.refresh),
-                          label: const Text('Coba lagi'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }
-
-            final items = snap.data ?? [];
-            if (items.isEmpty) {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: _GlassCard(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.receipt_long, size: 34),
-                        const SizedBox(height: 10),
-                        const Text(
-                          'Belum ada pesanan',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          'Pesanan kamu akan muncul di sini setelah checkout.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black.withValues(alpha: .65),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        OutlinedButton.icon(
-                          onPressed: _reload,
-                          icon: const Icon(Icons.refresh),
-                          label: const Text('Refresh'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }
-
-            return RefreshIndicator(
-              onRefresh: _reload,
-              child: ListView.builder(
-                padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
-                itemCount: items.length + 1,
-                itemBuilder: (context, idx) {
-                  if (idx == 0) {
-                    // Header
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: _GlassCard(
-                        padding: const EdgeInsets.all(14),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 46,
-                              height: 46,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                gradient: const LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Color(0xFF7C3AED),
-                                    Color(0xFF06B6D4),
-                                  ],
-                                ),
-                              ),
-                              child: const Icon(
-                                Icons.receipt_long,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Pesanan Saya',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 3),
-                                  Text(
-                                    '${items.length} pesanan • tarik ke bawah untuk refresh',
-                                    style: TextStyle(
-                                      color: Colors.black.withValues(
-                                        alpha: .60,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }
-
-                  final o = items[idx - 1];
-                  final st = _statusStyle(o.status);
-
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: InkWell(
-                      onTap: () => _showDetail(o),
-                      borderRadius: BorderRadius.circular(18),
-                      child: _GlassCard(
-                        padding: const EdgeInsets.all(14),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // left icon
-                            Container(
-                              width: 44,
-                              height: 44,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                color: st.bg,
-                                border: Border.all(
-                                  color: Colors.black.withValues(alpha: .06),
-                                ),
-                              ),
-                              child: Icon(st.icon, color: st.fg),
-                            ),
-                            const SizedBox(width: 12),
-
-                            // content
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          '#${o.id} • ${o.packageName}',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: 14.5,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      _StatusPill(
-                                        bg: st.bg,
-                                        fg: st.fg,
-                                        icon: st.icon,
-                                        text: st.label,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 8),
-
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.date_range_outlined,
-                                        size: 16,
-                                        color: Colors.black.withValues(
-                                          alpha: .55,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Expanded(
-                                        child: Text(
-                                          _fmtDateRange(o.startDate, o.endDate),
-                                          style: TextStyle(
-                                            color: Colors.black.withValues(
-                                              alpha: .70,
-                                            ),
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 6),
-
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.restaurant_outlined,
-                                        size: 16,
-                                        color: Colors.black.withValues(
-                                          alpha: .55,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Text(
-                                        'Porsi: ${o.portions}',
-                                        style: TextStyle(
-                                          color: Colors.black.withValues(
-                                            alpha: .70,
-                                          ),
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 12),
-                                      Icon(
-                                        Icons.payments_outlined,
-                                        size: 16,
-                                        color: Colors.black.withValues(
-                                          alpha: .55,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Expanded(
-                                        child: Text(
-                                          _money.format(o.total),
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            const SizedBox(width: 8),
-                            Icon(
-                              Icons.chevron_right_rounded,
-                              color: Colors.black.withValues(alpha: .45),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            );
-          },
-        ),
-      ],
-    );
-  }
-}
-
-// ================= helpers =================
-
-class _GlassCard extends StatelessWidget {
-  final Widget child;
-  final EdgeInsets? padding;
-
-  const _GlassCard({required this.child, this.padding});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: padding ?? const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18),
-        color: Colors.white.withValues(alpha: .74),
-        border: Border.all(color: Colors.white.withValues(alpha: .58)),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 18,
-            offset: const Offset(0, 10),
-            color: Colors.black.withValues(alpha: .08),
-          ),
-        ],
+          );
+        },
       ),
-      child: child,
-    );
-  }
-}
-
-class _StatusPill extends StatelessWidget {
-  final Color bg;
-  final Color fg;
-  final IconData icon;
-  final String text;
-
-  const _StatusPill({
-    required this.bg,
-    required this.fg,
-    required this.icon,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(999),
-        color: bg,
-        border: Border.all(color: Colors.black.withValues(alpha: .06)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: fg),
-          const SizedBox(width: 6),
-          Text(
-            text,
-            style: TextStyle(
-              color: fg,
-              fontWeight: FontWeight.w900,
-              fontSize: 12,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  final String left;
-  final String right;
-  final bool bold;
-
-  const _InfoRow({required this.left, required this.right, this.bold = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            left,
-            style: TextStyle(
-              color: Colors.black.withValues(alpha: .65),
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-        Text(
-          right,
-          style: TextStyle(
-            fontWeight: bold ? FontWeight.w900 : FontWeight.w800,
-            fontSize: bold ? 14.5 : 13.5,
-          ),
-        ),
-      ],
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../services/public_meal_service.dart';
-import '../extra/map_screen.dart';
-import '../extra/chart_screen.dart';
+// Import map dan chart dihapus karena tidak boleh ada di sini
 
 class PublicMenuScreen extends StatefulWidget {
   const PublicMenuScreen({super.key});
@@ -268,42 +267,7 @@ class _PublicMenuScreenState extends State<PublicMenuScreen> {
                 ),
               ),
 
-              const SizedBox(height: 12),
-
-              // --- DIPINDAHKAN KE SINI (DILUAR LOOP) ---
-              // Fitur Tambahan Card
-              _GlassCard(
-                child: Column(
-                  children: [
-                    const Text(
-                      "Fitur Tambahan",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 15,
-                      ),
-                    ),
-                    const Divider(),
-                    ListTile(
-                      leading: const Icon(Icons.map),
-                      title: const Text("Lokasi Katering"),
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const MapScreen()),
-                      ),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.show_chart),
-                      title: const Text("Grafik Penjualan"),
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const ChartScreen()),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // ------------------------------------------
+              // --- BAGIAN FITUR TAMBAHAN (MAP & CHART) SUDAHDIHAPUS ---
               const SizedBox(height: 10),
               if (_loading) const LinearProgressIndicator(),
               const SizedBox(height: 10),
@@ -335,7 +299,6 @@ class _PublicMenuScreenState extends State<PublicMenuScreen> {
                 final category = (m['strCategory'] ?? '').toString();
                 final thumb = (m['strMealThumb'] ?? '').toString();
 
-                // Disini cukup return Card makanannya saja
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: InkWell(
@@ -415,7 +378,8 @@ class _PublicMenuScreenState extends State<PublicMenuScreen> {
   }
 }
 
-// ... helper classes (_GlassCard, _Chip, _InfoRow) tetap sama di bawah ...
+// ... helper classes (_GlassCard, _Chip, _InfoRow) tetap sama ...
+
 class _GlassCard extends StatelessWidget {
   final Widget child;
   final EdgeInsets? padding;

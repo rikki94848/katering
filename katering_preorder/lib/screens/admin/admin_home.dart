@@ -96,8 +96,8 @@ class _AdminHomeState extends State<AdminHome> {
                     child: Text(
                       'Keluar dari akun admin?',
                       style: Theme.of(ctx).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w800,
-                      ),
+                            fontWeight: FontWeight.w800,
+                          ),
                     ),
                   ),
                 ],
@@ -108,8 +108,8 @@ class _AdminHomeState extends State<AdminHome> {
                 child: Text(
                   'Kamu akan kembali ke halaman login.',
                   style: Theme.of(ctx).textTheme.bodyMedium?.copyWith(
-                    color: scheme.onSurfaceVariant,
-                  ),
+                        color: scheme.onSurfaceVariant,
+                      ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -175,8 +175,8 @@ class _AdminHomeState extends State<AdminHome> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w900,
-                    ),
+                          fontWeight: FontWeight.w900,
+                        ),
                   ),
                   const SizedBox(height: 2),
                   Text(
@@ -184,8 +184,8 @@ class _AdminHomeState extends State<AdminHome> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: scheme.onSurfaceVariant,
-                    ),
+                          color: scheme.onSurfaceVariant,
+                        ),
                   ),
                 ],
               ),
@@ -390,9 +390,10 @@ class _HeaderCard extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: isActive ? scheme.primary : scheme.onSurfaceVariant,
-                  ),
+                        fontWeight: FontWeight.w800,
+                        color:
+                            isActive ? scheme.primary : scheme.onSurfaceVariant,
+                      ),
                 ),
               ],
             ),
@@ -436,15 +437,15 @@ class _HeaderCard extends StatelessWidget {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w900,
-                      ),
+                            fontWeight: FontWeight.w900,
+                          ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       subtitle,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: scheme.onSurfaceVariant,
-                      ),
+                            color: scheme.onSurfaceVariant,
+                          ),
                     ),
                   ],
                 ),
@@ -532,13 +533,17 @@ class _AdminDrawer extends StatelessWidget {
                         children: [
                           Text(
                             'Katering Pre-Order',
-                            style: Theme.of(context).textTheme.titleMedium
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
                                 ?.copyWith(fontWeight: FontWeight.w900),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             'Admin: $name',
-                            style: Theme.of(context).textTheme.bodySmall
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
                                 ?.copyWith(color: scheme.onSurfaceVariant),
                           ),
                         ],
@@ -571,11 +576,13 @@ class _AdminDrawer extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const ChatScreen(userName: 'Admin'),
+                  builder: (_) => ChatScreen(
+                    userName: 'Admin',
+                    orderId: 0, // <--- TAMBAHKAN INI (0 = Chat Umum)
+                  ),
                 ),
               ),
             ),
-
             ListTile(
               leading: const Icon(Icons.bar_chart),
               title: const Text("Grafik Laporan"),
@@ -584,7 +591,6 @@ class _AdminDrawer extends StatelessWidget {
                 MaterialPageRoute(builder: (_) => const ChartScreen()),
               ),
             ),
-
             const Spacer(),
             Padding(
               padding: const EdgeInsets.all(16),

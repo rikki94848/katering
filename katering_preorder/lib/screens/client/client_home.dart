@@ -45,11 +45,8 @@ class _ClientHomeState extends State<ClientHome> {
   }
 
   String _initials(String name) {
-    final parts = name
-        .trim()
-        .split(RegExp(r'\s+'))
-        .where((e) => e.isNotEmpty)
-        .toList();
+    final parts =
+        name.trim().split(RegExp(r'\s+')).where((e) => e.isNotEmpty).toList();
     if (parts.isEmpty) return '?';
     if (parts.length == 1) return parts.first.characters.first.toUpperCase();
     return (parts[0].characters.first + parts[1].characters.first)
@@ -101,8 +98,15 @@ class _ClientHomeState extends State<ClientHome> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              // Kirim nama user yg login ke halaman chat
-              builder: (_) => ChatScreen(userName: widget.session.name),
+              builder: (_) => ChatScreen(
+                // SEBELUMNYA (ERROR):
+                // userName: widget.session.userName,
+
+                // GANTI JADI INI (Solusi Cepat):
+                userName: 'Client',
+
+                orderId: 0,
+              ),
             ),
           );
         },

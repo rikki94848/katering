@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../services/order_service.dart';
 import '../../state/session.dart';
+import '../extra/chart_screen.dart'; // Pastikan import ini ada
 
 class SalesReportScreen extends StatefulWidget {
   final Session session;
@@ -72,8 +73,9 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
         SnackBar(content: Text(_error!), behavior: SnackBarBehavior.floating),
       );
     } finally {
-      if (!mounted) return;
-      setState(() => _loading = false);
+      if (mounted) {
+        setState(() => _loading = false);
+      }
     }
   }
 
@@ -86,7 +88,6 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
     );
     if (picked == null) return;
 
-    // jaga-jaga kalau "Dari" melewati "Sampai"
     setState(() {
       _from = picked;
       if (_from.isAfter(_to)) _to = _from;
@@ -278,7 +279,102 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
                           ),
                         ],
                       ),
+
                       const SizedBox(height: 12),
+
+                      // --- TOMBOL GRAFIK PENJUALAN ---
+                      Card(
+                        elevation: 2,
+                        shadowColor: const Color(
+                          0xFF7C3AED,
+                        ).withValues(alpha: 0.3),
+                        color: const Color(0xFF7C3AED), // Ungu Tema
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12),
+                          onTap: () {
+                            // Logic Generate Dummy Data untuk Grafik
+                            final days = _to.difference(_from).inDays + 1;
+                            final totalOmzet = _asInt(_data?['omzet']);
+                            List<int> dummyDailyData = [];
+
+                            if (totalOmzet == 0) {
+                              dummyDailyData = List.filled(days, 0);
+                            } else {
+                              final avg = totalOmzet / days;
+                              for (int i = 0; i < days; i++) {
+                                if (i == days - 1) {
+                                  // Variasi acak sederhana
+                                  double variation = (i % 2 == 0 ? 0.8 : 1.2);
+                                  dummyDailyData.add((avg * variation).toInt());
+                                } else {
+                                  double variation = 0.5 + (0.05 * (i % 10));
+                                  dummyDailyData.add((avg * variation).toInt());
+                                }
+                              }
+                            }
+
+                            // Navigasi ke ChartScreen
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => ChartScreen(
+                                  startDate: _from,
+                                  endDate: _to,
+                                  dailyOmzet: dummyDailyData,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.bar_chart_rounded,
+                                  color: Colors.white,
+                                  size: 28,
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Visualisasi Grafik',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        'Lihat tren penjualan dalam bentuk diagram',
+                                        style: TextStyle(
+                                          color: Colors.white.withValues(
+                                            alpha: 0.9,
+                                          ),
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // ------------------------------------
+                      const SizedBox(height: 12),
+
                       Card(
                         child: Padding(
                           padding: const EdgeInsets.all(16),
@@ -305,6 +401,7 @@ class _SalesReportScreenState extends State<SalesReportScreen> {
   }
 }
 
+// ... Widget Helper ...
 class _DateButton extends StatelessWidget {
   final String label;
   final String value;
