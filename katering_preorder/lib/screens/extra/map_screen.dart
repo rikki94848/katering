@@ -11,7 +11,7 @@ class MapScreen extends StatelessWidget {
       appBar: AppBar(title: const Text("Lokasi Katering")),
       body: FlutterMap(
         options: const MapOptions(
-          initialCenter: LatLng(-6.9175, 107.6191), // Bandung
+          initialCenter: LatLng(-6.9336026, 107.5754104), // Bandung
           initialZoom: 13,
         ),
         children: [
@@ -22,7 +22,7 @@ class MapScreen extends StatelessWidget {
           MarkerLayer(
             markers: const [
               Marker(
-                point: LatLng(-6.9175, 107.6191),
+                point: LatLng(-6.9336026, 107.5754104),
                 child: Icon(Icons.location_pin, color: Colors.red, size: 40),
               ),
             ],

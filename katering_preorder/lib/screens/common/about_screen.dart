@@ -98,7 +98,7 @@ class AboutScreen extends StatelessWidget {
 
             _DevCard(name: 'Rikki Subagja', npm: '152022055'),
             _DevCard(name: 'Aji Rahman Nugraha', npm: '152022060'),
-            _DevCard(name: 'Ananda Permana Mulyadi', npm: '152022085'),
+            _DevCard(name: 'Ananda Permana Mulyadi', npm: '152022086'),
 
             const SizedBox(height: 16),
             const Divider(),
@@ -145,7 +145,7 @@ class AboutScreen extends StatelessWidget {
 
             Center(
               child: Text(
-                'UAS Pemrograman Mobile\nSemester Ganjil 2025/2026',
+                'Bigmo Katering',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black.withValues(alpha: 0.6),
