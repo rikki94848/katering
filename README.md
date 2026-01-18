@@ -58,7 +58,7 @@ Berikut adalah tampilan antarmuka aplikasi Bigmo Katering:
 ### A. Tampilan Umum & Autentikasi
 | Loading Screen | Login / Register |
 | :---: | :---: |
-| <img src="katering_preorder/assets/screenshots/loading.png" width="200" alt="Loading" /> | <img src="assets/screenshots/login.png" width="200" alt="Login" /> |
+| <img src="katering_preorder/assets/screenshots/loading.png" width="200" alt="Loading" /> | <img src="katering_preorder/assets/screenshots/login.png" width="200" alt="Login" /> |
 | *Loading screen awal saat aplikasi dibuka.* | *Form login dan registrasi akun baru (Client & Admin).* |
 
 ---
@@ -68,17 +68,17 @@ Admin memiliki hak akses penuh untuk mengelola operasional katering.
 
 | 1. Dashboard Approval | 2. Kelola Paket | 3. Tambah Paket |
 | :---: | :---: | :---: |
-| <img src="assets/screenshots/admin_approval.png" width="200" /> | <img src="assets/screenshots/admin_paket.png" width="200" /> | <img src="assets/screenshots/admin_add_paket.png" width="200" /> |
+| <img src="katering_preorder/assets/screenshots/admin_approval.png" width="200" /> | <img src="katering_preorder/assets/screenshots/admin_paket.png" width="200" /> | <img src="assets/screenshots/admin_add_paket.png" width="200" /> |
 | *Laman approval user yang baru mendaftar.* | *Daftar paket makanan yang akan dipilih user.* | *Form penambahan paket baru oleh Admin.* |
 
 | 4. Proses Pesanan | 5. Riwayat Pesanan | 6. Diskusi Pesanan |
 | :---: | :---: | :---: |
-| <img src="assets/screenshots/admin_proses.png" width="200" /> | <img src="assets/screenshots/admin_history.png" width="200" /> | <img src="assets/screenshots/chat.png" width="200" /> |
+| <img src="katering_preorder/assets/screenshots/admin_proses.png" width="200" /> | <img src="katering_preorder/assets/screenshots/admin_history.png" width="200" /> | <img src="assets/screenshots/chat.png" width="200" /> |
 | *Kelola status pesanan client yang berjalan.* | *Riwayat pemesanan yang telah selesai.* | *Diskusi live chat antara Admin dan User.* |
 
 | 7. Laporan Penjualan | 8. Grafik Penjualan |
 | :---: | :---: |
-| <img src="assets/screenshots/laporan.png" width="200" /> | <img src="assets/screenshots/grafik.png" width="200" /> |
+| <img src="katering_preorder/assets/screenshots/laporan.png" width="200" /> | <img src="katering_preorder/assets/screenshots/grafik.png" width="200" /> |
 | *Laporan omzet dan keuntungan.* | *Visualisasi grafik tren pendapatan.* |
 
 ---
@@ -88,17 +88,17 @@ Client dapat melihat menu, memesan, dan melacak pesanan.
 
 | 1. Dashboard User | 2. Inspirasi Menu | 3. Daftar Paket |
 | :---: | :---: | :---: |
-| <img src="assets/screenshots/register.png" width="200" /> | <img src="assets/screenshots/inspirasi.png" width="200" /> | <img src="assets/screenshots/client_paket.png" width="200" /> |
-| *Menu utama dashboard user.* | *Rekomendasi masakan (Integrasi API).* | *Pilihan paket katering untuk dibeli.* |
+| <img src="katering_preorder/assets/screenshots/register.png" width="200" /> | <img src="katering_preorder/assets/screenshots/inspirasi.png" width="200" /> | <img src="assets/screenshots/client_paket.png" width="200" /> |
+| *Register user.* | *Rekomendasi masakan (Integrasi API).* | *Pilihan paket katering untuk dibeli.* |
 
 | 4. Pesanan & Riwayat | 5. Ulasan Produk | 6. Lokasi Katering |
 | :---: | :---: | :---: |
-| <img src="assets/screenshots/client_order.png" width="200" /> | <img src="assets/screenshots/ulasan.png" width="200" /> | <img src="assets/screenshots/lokasi.png" width="200" /> |
+| <img src="katering_preorder/assets/screenshots/client_order.png" width="200" /> | <img src="katering_preorder/assets/screenshots/ulasan.png" width="200" /> | <img src="katering_preorder/assets/screenshots/lokasi.png" width="200" /> |
 | *Status pesanan aktif & riwayat.* | *Form ulasan/rating untuk paket.* | *Peta lokasi fisik dapur katering.* |
 
 | 7. Tentang Aplikasi |
 | :---: |
-| <img src="assets/screenshots/about.png" width="200" /> |
+| <img src="katering_preorder/assets/screenshots/about.png" width="200" /> |
 | *Informasi pengembang & versi aplikasi.* |
 
 ---
