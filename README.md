@@ -95,10 +95,10 @@ Untuk menjalankan aplikasi ini secara utuh, silakan ikuti urutan berikut agar ti
 Berikut adalah dokumentasi tampilan antarmuka (UI) aplikasi Bigmo Katering:
 
 ### A. Tampilan Umum & Autentikasi
-| Loading Screen | Login / Register |
+| Loading Screen | Login |
 | :---: | :---: |
 | <img src="katering_preorder/assets/screenshots/loading.png" width="200" alt="Loading" /> | <img src="katering_preorder/assets/screenshots/login.png" width="200" alt="Login" /> |
-| *Loading Screen Awal* | *Form Masuk & Daftar Akun* |
+| *Loading Screen Awal* | *Form Masuk* |
 
 ---
 
@@ -125,10 +125,10 @@ Admin memiliki hak akses penuh untuk mengelola operasional katering.
 ### C. Fitur Customer (Pelanggan)
 Client dapat melihat menu, memesan, dan melacak pesanan.
 
-| 1. Dashboard User | 2. Inspirasi Menu | 3. Daftar Paket |
+| 1. Register User | 2. Inspirasi Menu | 3. Daftar Paket |
 | :---: | :---: | :---: |
-| <img src="katering_preorder/assets/screenshots/client_home.png" width="200" /> | <img src="katering_preorder/assets/screenshots/inspirasi.png" width="200" /> | <img src="katering_preorder/assets/screenshots/client_paket.png" width="200" /> |
-| *Halaman Utama* | *Integrasi TheMealDB* | *Pilih Paket* |
+| <img src="katering_preorder/assets/screenshots/register.png" width="200" /> | <img src="katering_preorder/assets/screenshots/inspirasi.png" width="200" /> | <img src="katering_preorder/assets/screenshots/client_paket.png" width="200" /> |
+| *Halaman Register* | *Integrasi TheMealDB* | *Pilih Paket* |
 
 | 4. Pesanan & Riwayat | 5. Ulasan Produk | 6. Tentang Aplikasi |
 | :---: | :---: | :---: |
