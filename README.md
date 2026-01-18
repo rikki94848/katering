@@ -1,10 +1,9 @@
-# 🍱 Bigmo Katering (Full Stack)
+# 🍱 Bigmo Katering
 
 **Bigmo Katering** adalah sistem aplikasi katering terintegrasi yang terdiri dari **Aplikasi Mobile** (untuk Client & Admin) dan **Backend Server** (REST API).
 
 Aplikasi ini dirancang untuk mempermudah pemesanan paket katering harian secara praktis, dengan fitur pemisahan peran antara **Client** (Pelanggan) dan **Admin** (Pengelola).
 
-Proyek ini diajukan untuk memenuhi **Ujian Akhir Semester (UAS) Pemrograman Mobile** Semester Ganjil 2025/2026 di Institut Teknologi Nasional Bandung.
 
 ---
 
@@ -149,12 +148,12 @@ Berikut adalah bukti implementasi teknis Database dan Integrasi API yang digunak
 ### 1. Struktur Database (MySQL)
 Berikut adalah desain tabel relasional yang digunakan dalam sistem (Tabel Users, Packages, Orders):
 
-<img src="katering_preorder/assets/screenshots/database.png" width="600" alt="Struktur Database" />
+<img src="katering_preorder/assets/screenshots/database.png" width="900" alt="Struktur Database" />
 
 ### 2. Integrasi API (TheMealDB)
 Aplikasi menggunakan API publik dari **TheMealDB** sebagai sumber data untuk fitur "Inspirasi Menu":
 
-<img src="katering_preorder/assets/screenshots/api_ref.png" width="600" alt="TheMealDB API" />
+<img src="katering_preorder/assets/screenshots/api_ref.png" width="900" alt="TheMealDB API" />
 
 ---
 Copyright © 2026 - Bigmo Katering
