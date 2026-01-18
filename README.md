@@ -58,7 +58,7 @@ Berikut adalah tampilan antarmuka aplikasi Bigmo Katering:
 ### A. Tampilan Umum & Autentikasi
 | Loading Screen | Login / Register |
 | :---: | :---: |
-| <img src="assets/screenshots/loading.png" width="200" alt="Loading" /> | <img src="assets/screenshots/login.png" width="200" alt="Login" /> |
+| <img src="katering_preorder/assets/screenshots/loading.png" width="200" alt="Loading" /> | <img src="assets/screenshots/login.png" width="200" alt="Login" /> |
 | *Loading screen awal saat aplikasi dibuka.* | *Form login dan registrasi akun baru (Client & Admin).* |
 
 ---
