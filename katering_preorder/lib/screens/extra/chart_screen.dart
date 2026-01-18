@@ -62,9 +62,10 @@ class _ChartScreenState extends State<ChartScreen> {
 
     // Perbaikan Penting: yInterval tidak boleh 0
     double yInterval = maxY / 5;
-    if (yInterval <= 0)
+    if (yInterval <= 0) {
       yInterval =
           20000.0; // Fallback jika maxY 0 (seharusnya tidak mungkin kena ini krn logic di atas)
+    }
 
     return Scaffold(
       appBar: AppBar(title: const Text("Grafik Penjualan")),
@@ -141,10 +142,11 @@ class _ChartScreenState extends State<ChartScreen> {
                         interval: yInterval,
                         reservedSize: 45,
                         getTitlesWidget: (value, meta) {
-                          if (value == 0)
+                          if (value == 0) {
                             return const Text('0',
                                 style: TextStyle(
                                     fontSize: 10, color: Colors.grey));
+                          }
 
                           String text;
                           if (value >= 1000000) {
