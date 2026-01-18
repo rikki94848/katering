@@ -60,10 +60,10 @@ Untuk menjalankan aplikasi ini secara utuh, silakan ikuti urutan berikut agar ti
 ### 1️⃣ Clone Repository 📥
 Buka terminal (Git Bash / CMD / VS Code), lalu jalankan perintah berikut untuk mengunduh *source code*:
 
-```bash
+```
 git clone [https://github.com/rikki94848/katering.git](https://github.com/rikki94848/katering.git)
 cd katering
----
+
 ### 2️⃣ Setup Database & Backend 🗄️
 
 1.  **Database MySQL:**
