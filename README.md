@@ -73,7 +73,7 @@ Admin memiliki hak akses penuh untuk mengelola operasional katering.
 
 | 4. Proses Pesanan | 5. Riwayat Pesanan | 6. Diskusi Pesanan |
 | :---: | :---: | :---: |
-| <img src="katering_preorder/assets/screenshots/admin_proses.png" width="200" /> | <img src="katering_preorder/assets/screenshots/admin_history.png" width="200" /> | <img src="assets/screenshots/chat.png" width="200" /> |
+| <img src="katering_preorder/assets/screenshots/admin_proses.png" width="200" /> | <img src="katering_preorder/assets/screenshots/admin_history.png" width="200" /> | <img src="katering_preorder/assets/screenshots/chat.png" width="200" /> |
 | *Kelola status pesanan client yang berjalan.* | *Riwayat pemesanan yang telah selesai.* | *Diskusi live chat antara Admin dan User.* |
 
 | 7. Laporan Penjualan | 8. Grafik Penjualan |
