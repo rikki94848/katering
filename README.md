@@ -57,7 +57,14 @@ Aplikasi ini dibangun menggunakan teknologi modern berikut:
 
 Untuk menjalankan aplikasi ini secara utuh, silakan ikuti urutan berikut agar tidak terjadi error koneksi:
 
-### 1️⃣ Setup Database & Backend 🗄️
+### 1️⃣ Clone Repository 📥
+Buka terminal (Git Bash / CMD / VS Code), lalu jalankan perintah berikut untuk mengunduh *source code*:
+
+```bash
+git clone [https://github.com/rikki94848/katering.git](https://github.com/rikki94848/katering.git)
+cd katering
+
+### 2️⃣ Setup Database & Backend 🗄️
 
 1.  **Database MySQL:**
     * Nyalakan XAMPP/MySQL.
@@ -73,7 +80,7 @@ Untuk menjalankan aplikasi ini secara utuh, silakan ikuti urutan berikut agar ti
     ```
     *Server akan berjalan di `http://localhost:3000`.*
 
-### 2️⃣ Setup Aplikasi Mobile (Flutter) 📱
+### 3️⃣ Setup Aplikasi Mobile (Flutter) 📱
 
 1.  **Buka Terminal Baru:**
     Biarkan terminal backend tetap berjalan, buka terminal/tab baru di VS Code.
