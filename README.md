@@ -101,10 +101,10 @@ cd katering
 Berikut adalah dokumentasi tampilan antarmuka (UI) aplikasi Bigmo Katering:
 
 ### A. Tampilan Umum & Autentikasi
-| Loading Screen | Login |
-| :---: | :---: |
-| <img src="katering_preorder/assets/screenshots/loading.png" width="200" alt="Loading" /> | <img src="katering_preorder/assets/screenshots/login.png" width="200" alt="Login" /> |
-| *Loading Screen Awal* | *Form Masuk* |
+| Loading Screen | Login | Register |
+| :---: | :---: | :---: |
+| <img src="katering_preorder/assets/screenshots/loading.png" width="200" alt="Loading" /> | <img src="katering_preorder/assets/screenshots/login.png" width="200" alt="Login" /> | <img src="katering_preorder/assets/screenshots/register.png" width="200" /> |
+| *Loading Screen Awal* | *Form Masuk* | *Halaman Register* |
 
 ---
 
@@ -131,20 +131,15 @@ Admin memiliki hak akses penuh untuk mengelola operasional katering.
 ### C. Fitur Customer (Pelanggan)
 Client dapat melihat menu, memesan, dan melacak pesanan.
 
-| 1. Register User | 2. Inspirasi Menu | 3. Daftar Paket |
+| 1. Inspirasi Menu | 2. Daftar Paket | 3. Pesanan & Riwayat |
 | :---: | :---: | :---: |
-| <img src="katering_preorder/assets/screenshots/register.png" width="200" /> | <img src="katering_preorder/assets/screenshots/inspirasi.png" width="200" /> | <img src="katering_preorder/assets/screenshots/client_paket.png" width="200" /> |
-| *Halaman Register* | *Integrasi TheMealDB* | *Pilih Paket* |
+| <img src="katering_preorder/assets/screenshots/inspirasi.png" width="200" /> | <img src="katering_preorder/assets/screenshots/client_paket.png" width="200" /> | <img src="katering_preorder/assets/screenshots/client_order.png" width="200" /> |
+| *Integrasi TheMealDB* | *Pilih Paket* | *Tracking Order* |
 
-| 4. Pesanan & Riwayat | 5. Ulasan Produk | 6. Tentang Aplikasi |
+| 4. Ulasan Produk | 5. Tentang Aplikasi | 6. Lokasi Katering |
 | :---: | :---: | :---: |
-| <img src="katering_preorder/assets/screenshots/client_order.png" width="200" /> | <img src="katering_preorder/assets/screenshots/ulasan.png" width="200" /> | <img src="katering_preorder/assets/screenshots/about.png" width="200" /> |
-| *Tracking Order* | *Rating & Review* | *Info Developer* |
-
-| 7. Lokasi Katering |
-| :---: |
-| <img src="katering_preorder/assets/screenshots/lokasi.png" width="200" /> |
-| *Maps Lokasi Dapur* |
+| <img src="katering_preorder/assets/screenshots/ulasan.png" width="200" /> | <img src="katering_preorder/assets/screenshots/about.png" width="200" /> | <img src="katering_preorder/assets/screenshots/lokasi.png" width="200" /> |
+| *Rating & Review* | *Info Aplikasi* | *Maps Lokasi* |
 
 ---
 
