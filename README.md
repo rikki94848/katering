@@ -88,7 +88,7 @@ Client dapat melihat menu, memesan, dan melacak pesanan.
 
 | 1. Dashboard User | 2. Inspirasi Menu | 3. Daftar Paket |
 | :---: | :---: | :---: |
-| <img src="katering_preorder/assets/screenshots/register.png" width="200" /> | <img src="katering_preorder/assets/screenshots/inspirasi.png" width="200" /> | <img src="assets/screenshots/client_paket.png" width="200" /> |
+| <img src="katering_preorder/assets/screenshots/register.png" width="200" /> | <img src="katering_preorder/assets/screenshots/inspirasi.png" width="200" /> | <img src="katering_preorder/assets/screenshots/client_paket.png" width="200" /> |
 | *Register user.* | *Rekomendasi masakan (Integrasi API).* | *Pilihan paket katering untuk dibeli.* |
 
 | 4. Pesanan & Riwayat | 5. Ulasan Produk | 6. Lokasi Katering |
