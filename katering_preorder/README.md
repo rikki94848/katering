@@ -28,8 +28,8 @@ Berikut adalah antarmuka aplikasi Bigmo Katering yang telah dikembangkan:
 ### C. Fitur Client (Pelanggan)
 | Dashboard User | Inspirasi Menu (API) | Riwayat Pesanan |
 | :---: | :---: | :---: |
-| <img src="assets/screenshots/client_home.png" width="200" /> | <img src="assets/screenshots/inspirasi.png" width="200" /> | <img src="assets/screenshots/client_order.png" width="200" /> |
-| *Menu Utama* | *Integrasi TheMealDB* | *Tracking Pesanan* |
+| <img src="assets/screenshots/register.png" width="200" /> | <img src="assets/screenshots/inspirasi.png" width="200" /> | <img src="assets/screenshots/client_order.png" width="200" /> |
+| *Register* | *Integrasi TheMealDB* | *Tracking Pesanan* |
 
 ---
 
@@ -58,7 +58,6 @@ Pastikan backend server sudah berjalan sebelum menjalankan aplikasi ini.
     flutter run
     ```
 
-> **Catatan:** Jika gambar tidak muncul, pastikan Anda sudah membuat folder `assets/screenshots` di dalam folder ini dan memasukkan file gambar png sesuai nama di atas.
 
 ---
 Copyright © 2026 - Bigmo Katering Mobile
