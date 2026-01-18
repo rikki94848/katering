@@ -68,7 +68,7 @@ Admin memiliki hak akses penuh untuk mengelola operasional katering.
 
 | 1. Dashboard Approval | 2. Kelola Paket | 3. Tambah Paket |
 | :---: | :---: | :---: |
-| <img src="katering_preorder/assets/screenshots/admin_approval.png" width="200" /> | <img src="katering_preorder/assets/screenshots/admin_paket.png" width="200" /> | <img src="assets/screenshots/admin_add_paket.png" width="200" /> |
+| <img src="katering_preorder/assets/screenshots/admin_approval.png" width="200" /> | <img src="katering_preorder/assets/screenshots/admin_paket.png" width="200" /> | <img src="katering_preorder/assets/screenshots/admin_add_paket.png" width="200" /> |
 | *Laman approval user yang baru mendaftar.* | *Daftar paket makanan yang akan dipilih user.* | *Form penambahan paket baru oleh Admin.* |
 
 | 4. Proses Pesanan | 5. Riwayat Pesanan | 6. Diskusi Pesanan |
