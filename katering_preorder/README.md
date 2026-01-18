@@ -9,9 +9,9 @@ Modul ini adalah **Frontend Aplikasi** yang dibangun menggunakan **Flutter**. Ap
 Berikut adalah antarmuka aplikasi Bigmo Katering yang telah dikembangkan:
 
 ### A. Autentikasi & Umum
-| Loading Screen | Login / Register |
-| :---: | :---: |
-| <img src="assets/screenshots/loading.png" width="200" alt="Loading" /> | <img src="assets/screenshots/login.png" width="200" alt="Login" /> |
+| Loading Screen | Login | Register |
+| :---: | :---: | :---: |
+| <img src="assets/screenshots/loading.png" width="200" alt="Loading" /> | <img src="assets/screenshots/login.png" width="200" alt="Login" /> | <img src="assets/screenshots/register.png" width="200" /> |
 | *Tampilan awal* | *Form Masuk & Daftar* |
 
 ### B. Fitur Admin (Pengelola)
@@ -26,10 +26,10 @@ Berikut adalah antarmuka aplikasi Bigmo Katering yang telah dikembangkan:
 | *Visualisasi Omzet* | *Chat dengan Client* |
 
 ### C. Fitur Client (Pelanggan)
-| Dashboard User | Inspirasi Menu (API) | Riwayat Pesanan |
+| Daftar Paket |Inspirasi Menu (API) | Riwayat Pesanan |
 | :---: | :---: | :---: |
-| <img src="assets/screenshots/register.png" width="200" /> | <img src="assets/screenshots/inspirasi.png" width="200" /> | <img src="assets/screenshots/client_order.png" width="200" /> |
-| *Register* | *Integrasi TheMealDB* | *Tracking Pesanan* |
+| <img src="assets/screenshots/client_paket.png" width="200" /> | <img src="assets/screenshots/inspirasi.png" width="200" /> | <img src="assets/screenshots/client_order.png" width="200" /> |
+| *Pilih Paket* | *Integrasi TheMealDB* | *Tracking Pesanan* |
 
 ---
 
